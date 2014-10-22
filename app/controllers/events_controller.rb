@@ -85,6 +85,7 @@ class EventsController < ApplicationController
     @event.fireteam_leader = current_user.id
 	@event.requests = [ ]
 	@event.approvals = [ ]
+	@event.open = true
 	
     respond_to do |format|
       if @event.save
