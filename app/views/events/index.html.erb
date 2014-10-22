@@ -88,7 +88,7 @@
 </ul>
 <div class="col-md-6 col-xs-6">
 <ul class="list-group">
-<p>Date/Time: <%= event.date_time %></p>
+<strong><font color="red">Date/Time: <%= event.date_time.localtime  %></font></strong>
 <p><%= event.comments.truncate(75) %></p>	
 </ul>
 </div>
@@ -111,6 +111,7 @@
 <% @my_events.each do |list| %>
 <div class="row">  
 <div class="col-md-6 col-xs-6">
+<% if !list.empty? %>
 <ul class="list-group">
 	<strong><% if list.first.system == 'PS4' || list.first.system == 'PS3' %><font color="blue"><%= list.first.system %></font><%else%><font color="green"><%= list.first.system %></font><% end %>: <%= list.first.fireteam_group_type %></strong><br><font color="red">Recommended Level: <%=list.first.level %></font><br>
 	<% leader = User.where(id: list.first.fireteam_leader).first %>
@@ -127,12 +128,14 @@
 	<% end %>
 </div>	
 </ul>
+
 <div class="col-md-6 col-xs-6">
 <ul class="list-group">
-<p>Date/Time: <%= list.first.date_time %></p>
+<p>Date/Time: <%= list.first.date_time.localtime  %></p>
 <p><%= list.first.comments.truncate(75) %></p>	
 <p><% if list.first.approvals.include?(current_user.id) %> <font color="gold"> <h5>APPROVED</h5> </font><% else %><font color="gold"> Awaiting approval... </font><% end %></p>
 </ul>
+<% end %>
 </div>
 
 </div>

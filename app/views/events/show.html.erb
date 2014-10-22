@@ -49,7 +49,7 @@
 
 <p>
   <strong>Date time:</strong>
-  <%= @event.date_time %>
+  <font color="red"><%= @event.date_time.localtime %></font>
 </p>
 
 <p>
@@ -157,7 +157,7 @@
 	<br>
 	<%@announcements.each do |anounce|%>
 	<ul class="list-group">
-		<li class="list-group-item"><% person = User.where(id: anounce.user_id)%><strong><%=person.first.email%>:</strong> <%= anounce.comment %> <p><%= anounce.created_at %></p></li>
+		<li class="list-group-item"><% person = User.where(id: anounce.user_id)%><strong><%=person.first.email%>:</strong> <%= anounce.comment %> <p><%= anounce.created_at.localtime  %></p></li>
 	</ul>
 	<% end %>
 <% end %>

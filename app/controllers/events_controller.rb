@@ -21,6 +21,8 @@ class EventsController < ApplicationController
 	    @my_events = []
 	    list.each do |event|    	
 	    	@my_events << Event.where(id: event)
+	    	puts @my_events.inspect
+	    	puts "#######"
 	    end 
 	end 
   end

@@ -56,7 +56,8 @@
 -->
   <div class="field">
     <%= f.label :date_time %><br>
-    <input type="datetime-local" id="myLocalDate" name="date_time" value="2014-11-16T15:25:33">
+    <p> This is the time you would like to have the event, it is submitted in UTC as this is a global game. view the UTC to your local time comparison widget to list the correct time. </p>
+    <%= f.datetime_select :date_time, class: 'form-control'   %>
   </div>
 <br>
 
