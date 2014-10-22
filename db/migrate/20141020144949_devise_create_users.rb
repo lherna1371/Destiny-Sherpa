@@ -24,7 +24,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :rating 
       t.integer :guardian_level
       t.string :guardian_type
-      t.text :events_requested, default: []
+      t.text :events_requested
 
       ## Confirmable
       # t.string   :confirmation_token
