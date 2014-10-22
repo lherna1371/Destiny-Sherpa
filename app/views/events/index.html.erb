@@ -1,0 +1,164 @@
+<div class="row">
+  <div class="col-xs-6 col-sm-6 col-md-6">
+	<form action="/events/new" method="get">
+	<button class="btn btn-success">Post New Event </button>
+	</form>
+  </div>
+  <% if current_user != nil%>
+  <div class="col-xs-6 col-sm-6 col-md-6">
+	<form action="/events_manage" method="get">
+		<button class="btn btn-danger">Manage My Events </button>
+	</form>	  
+  </div>
+  <% end %>
+</div>
+
+
+<br>
+
+
+
+
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active"><a href="#home" role="tab" data-toggle="tab">Events</a></li>
+  <li><a href="#profile" role="tab" data-toggle="tab">My Events</a></li>
+  <li><a href="events/live_event/chat_window" onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;"" role="tab" data-toggle="tab">Live Event Building</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="home">
+<br>
+
+<form role="form" action="/events" method="get">
+  <div class="field">
+  	<label for="profile_name">System</label>
+	<select class="form-control" name="event[system]">
+		<option value="PS4">PS4</option>
+		<option value="PS3">PS3</option>
+		<option value="Xbox One">Xbox One</option>
+		<option value="Xbox 360">Xbox 360</option>
+	</select>
+  </div>
+  <div class="field">
+  	<label for="profile_name">Event Type</label>
+	<select class="form-control" name="event[fireteam_group_type]">
+		<option value="Raid - Vault of Glass">Raid - Vault of Glass</option>
+		<option value="Strike Team - Weekly">Strike Team - Weekly</option>
+		<option value="Strike Weekly Nightfall">Strike Weekly Nightfall</option>
+		<option value="Daily Heroic Story">Daily Heroic Story</option>
+		<option value="Strike Team - Devil's Lair">Strike Team - Devil's Lair</option>
+		<option value="Strike Team - The Summoning Pits">Strike Team - The Summoning Pits</option>
+		<option value="Strike Team - The Nexus">Strike Team - The Nexus</option>
+		<option value="Strike Team - Winter's Run">Strike Team - Winter's Run</option>
+		<option value="Strike Team - Cerberus Vae III">Strike Team - Cerberus Vae III</option>
+		<option value="Strike Team - Dust Palace">Strike Team - Dust Palace</option>
+		<option value="PvP - Control">PvP - Control</option>
+		<option value="PvP - Clash">PvP - Clash</option>
+		<option value="PvP - Rumble">PvP - Rumble</option>
+		<option value="PvP - Skirmish">PvP - Skirmish</option>
+		<option value="PvP - Salvage">PvP - Salvage</option>
+		<option value="PvP - Iron Banner">PvP - Iron Banner</option>
+	</select>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>  <a href='/'>Reset</a>
+</form>
+<br>
+
+<% @events.each do |event| %>
+<div class="row" style="border-bottom:1px solid black; border-top:1px solid black;">  
+<div class="col-md-6 col-xs-6">
+<ul class="list-group">
+	<strong><% if event.system == 'PS4' || event.system == 'PS3' %><font color="blue"><%= event.system %></font><%else%><font color="green"><%= event.system %></font><% end %>: <%= event.fireteam_group_type %></strong><br><font color="red">Recommended Level: <%=event.level %></font><br>
+	<% person = User.where(id: event.fireteam_leader).first %>
+	Sherpa: <%= person.email %> <font color="blue">PSN:<%= person.psn %></font> <font color="green">XBL: <%= person.xbl %></font>
+	<br>
+	Guardian Count: <%= event.approvals.count + 1  %>
+	<br>
+	<%= link_to 'View', event %>
+	<% if current_user != nil %>
+		<% if event.fireteam_leader == current_user.id %>
+			<%= link_to 'Edit', edit_event_path(event) %>
+			<%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% end %>	
+	<% end %>
+</div>	
+</ul>
+<div class="col-md-6 col-xs-6">
+<ul class="list-group">
+<p>Date/Time: <%= event.date_time %></p>
+<p><%= event.comments.truncate(75) %></p>	
+</ul>
+</div>
+
+</div>
+<%= will_paginate @events %>
+
+
+<% end %> 
+
+
+	  
+	  
+	  
+	  
+  </div>
+  <div class="tab-pane" id="profile">
+  <br>
+<% if current_user != nil %>	  
+<% @my_events.each do |list| %>
+<div class="row">  
+<div class="col-md-6 col-xs-6">
+<ul class="list-group">
+	<strong><% if list.first.system == 'PS4' || list.first.system == 'PS3' %><font color="blue"><%= list.first.system %></font><%else%><font color="green"><%= list.first.system %></font><% end %>: <%= list.first.fireteam_group_type %></strong><br><font color="red">Recommended Level: <%=list.first.level %></font><br>
+	<% leader = User.where(id: list.first.fireteam_leader).first %>
+	Sherpa: <%= leader.email %> <font color="blue">PSN:<%= leader.psn %></font> <font color="green">XBL: <%= leader.xbl %></font>
+	<br>
+	Guardian Count: <%= list.first.approvals.count + 1  %>
+	<br>
+	<%= link_to 'View', list.first %>
+	<% if current_user != nil %>
+		<% if list.first.fireteam_leader == current_user.id %>
+			<%= link_to 'Edit', edit_event_path(list) %>
+			<%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% end %>	
+	<% end %>
+</div>	
+</ul>
+<div class="col-md-6 col-xs-6">
+<ul class="list-group">
+<p>Date/Time: <%= list.first.date_time %></p>
+<p><%= list.first.comments.truncate(75) %></p>	
+<p><% if list.first.approvals.include?(current_user.id) %> <font color="gold"> <h5>APPROVED</h5> </font><% else %><font color="gold"> Awaiting approval... </font><% end %></p>
+</ul>
+</div>
+
+</div>
+
+
+<% end %>
+<% end %>	  
+	  
+</div>
+  <div class="tab-pane" id="messages">
+  	 <br> 
+  	  <p> Keep is simple, user your PSN/XBL gamertag as the username. If you have any problems chatting click on the profile icon and sign out.</p>
+  	 <br>
+	  <div id="tlkio" data-channel="destinysherpa" style="width:100%;height:400px;"></div><script async src="http://tlk.io/embed.js" type="text/javascript"></script>
+  </div>
+  
+  
+</div>
+
+
+
+<script>
+
+	$('#myTab a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	})
+
+</script>

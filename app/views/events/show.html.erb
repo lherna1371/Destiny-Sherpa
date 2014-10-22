@@ -1,0 +1,170 @@
+
+<div class="row">
+  <% if @event.fireteam_leader == current_user.id %>
+	  <% if @event.open == true || @event.open == nil%>
+	  <center><p> closing the event when you have completed your Fireteam, it will no longer be listed for others to request to join.</p></center>
+	  <div class="col-xs-6 col-sm-6 col-md-6">
+		<form action="/events/<%= @event.id %>/close" method="get">
+		<button class="btn btn-danger">Close Event </button>
+		</form>
+	  </div>
+	  <%else%> 
+	  <p>You have closed this event...</p>
+	  <div class="col-xs-6 col-sm-6 col-md-6">
+		<form action="/events/<%= @event.id %>/open" method="get">
+		<button class="btn btn-defaul">Open Event </button>
+		</form>
+	  </div>  
+	  <% end %>
+  <%end%>
+
+</div>
+<br>
+
+<p>
+  <strong>Fireteam leader:</strong>
+  <p><%= @leader.first.email %></p><font color="blue">PSN:<%= @leader.first.psn %></font> <font color="green"><br>XBL: <%= @leader.first.xbl %></font>
+  <br><% if @leader.first.destiny != nil%><a href="<%= @leader.first.destiny%>">View Destiny Profile</a><%else%><p>No Destiny Profile</p><%end%>
+</p>
+
+<p>
+  <strong>Fireteam group type:</strong>
+  <%= @event.fireteam_group_type %>
+</p>
+
+<p>
+  <strong>Recommended Level:</strong>
+  <%= @event.level %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @event.comments %>
+</p>
+
+<p>
+  <strong>Video url:</strong>
+  <%= @event.video_url %>
+</p>
+
+<p>
+  <strong>Date time:</strong>
+  <%= @event.date_time %>
+</p>
+
+<p>
+  <strong>System:</strong>
+  <%= @event.system %>
+</p>
+
+<% if @event.fireteam_leader == current_user.id %> 
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
+
+
+
+<h4>Requests to join event:</h4>
+<div class="row">
+<% @request_array.each do |f|%>
+	
+	<% if !@approval_array.include?(f.first.id) %>
+	<div class="col-xs-6 col-sm-6 col-md-3">
+	<ul class="list-group">
+		<li class="list-group-item"><%= f.first.email %></li>
+		<li class="list-group-item"><font color="blue">PSN:<%= f.first.psn %></font> <font color="green">XBL: <%= f.first.xbl %></font></li>
+		<li class="list-group-item">Guardian: <%= f.first.guardian_type %></li>
+		<li class="list-group-item">Level: <%= f.first.guardian_level %></li>
+		<li class="list-group-item">
+			<form action="/events/<%= @event.id %>/approve" method="post">
+				<input type="hidden" name="user_id" value="<%= f.first.id %>">
+				<button class="btn btn-danger">Approve</button>
+			</form>	 				
+		</li>
+		<%if f.first.destiny != nil %><li class="list-group-item"><a href="<%= f.first.destiny%>">View Destiny Profile</a></li>
+		<% else %> <li class="list-group-item"><p>No Destiny Profile</p></li>
+		<% end %>	
+	</ul>
+	</div>
+	<% end %>
+	
+<% end %>
+
+</div>
+
+
+<% else %>
+
+	<% if !@event.requests.include?(current_user.id)%>
+	<form action="/events/<%= @event.id %>/join_event" method="post">
+		<button class="btn btn-danger">Join Event </button>
+	</form>	  
+	<% end %>
+<% end %>
+
+
+<h4>Fireteam:</h4>
+<div class="row">
+	<% @leader.each do |f|%>
+		<div class="col-xs-6 col-sm-6 col-md-3">
+		<ul class="list-group">
+			<li class="list-group-item"><%= f.email %></li>
+			<li class="list-group-item"><font color="blue">PSN:<%= f.psn %></font> <font color="green">XBL: <%= f.xbl %></font></li>
+			<li class="list-group-item">Guardian: <%= f.guardian_type %></li>
+			<li class="list-group-item">Level: <%= f.guardian_level %></li>
+			<%if f.destiny != nil %><li class="list-group-item"><a href="<%= f.destiny%>">View Destiny Profile</a></li>
+			<% else %> <li class="list-group-item"><p>No Destiny Profile</p></li>
+			<% end %>
+		</ul>
+		</div>
+	<% end %>
+	
+	<% if @fireteam_array != nil %>
+	<% @fireteam_array.each do |f|%>
+		<div class="col-xs-6 col-sm-6 col-md-3">
+		<ul class="list-group">
+			<li class="list-group-item"><%= f.first.email %></li>
+			<li class="list-group-item"><font color="blue">PSN:<%= f.first.psn %></font> <font color="green">XBL: <%= f.first.xbl %></font></li>
+			<li class="list-group-item">Guardian: <%= f.first.guardian_type %></li>
+			<li class="list-group-item">Level: <%= f.first.guardian_level %></li>
+			<%if f.first.destiny != nil %><li class="list-group-item"><a href="<%= f.first.destiny%>">View Destiny Profile</a></li>
+			<% else %> <li class="list-group-item"><p>No Destiny Profile</p></li>
+			<% end %>			
+		</ul>
+		</div>
+	<% end %>
+	<% end %>
+
+</div>
+
+
+<h4>Announcements:</h4>
+<p> You need to be part of this fireteam to view or post announcements.</p>
+<% fireteam = [] %>
+<% @fireteam_array.each do |f| %>
+	<% fireteam << f.first.id%>
+<% end %>
+<% if fireteam.include?(current_user.id) || @event.fireteam_leader == current_user.id%>
+	<form role="form" action="/events/<%= @event.id %>/announcement_post" method="post">
+	  <div class="form-group form-group-lg">
+	    <div class="col-sm-10">
+	      <input class="form-control" type="text" id="formGroupInputLarge" name="announcement" placeholder="post an announcement">
+	    </div>
+	  </div>
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</form>
+	
+	<br>
+	<br>
+	<%@announcements.each do |anounce|%>
+	<ul class="list-group">
+		<li class="list-group-item"><% person = User.where(id: anounce.user_id)%><strong><%=person.first.email%>:</strong> <%= anounce.comment %> <p><%= anounce.created_at %></p></li>
+	</ul>
+	<% end %>
+<% end %>
+
+<br>
+
+
+
+
+

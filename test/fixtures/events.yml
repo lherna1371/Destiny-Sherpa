@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fireteam_leader: 1
+  fireteam_group_type: MyString
+  level: 1
+  comments: MyText
+  video_url: MyString
+  date_time: 2014-10-20 11:27:44
+  system: MyString
+
+two:
+  fireteam_leader: 1
+  fireteam_group_type: MyString
+  level: 1
+  comments: MyText
+  video_url: MyString
+  date_time: 2014-10-20 11:27:44
+  system: MyString

@@ -1,0 +1,85 @@
+
+<%= form_for(@event) do |f| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% @event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :fireteam_leader %><br>
+    <%= current_user.email   %><br>
+    <% if current_user.psn.present?%>PSN: <%= current_user.psn %><% else %>PSN: NONE<% end %><br>
+    <% if current_user.xbl.present?%>XBL: <%= current_user.xbl %><% else %>XBL: NONE<% end %><br>
+    <% if current_user.destiny.present?%>Destiny: <%= current_user.destiny %><% else %> Destiny: It would be helpful to list your Destiny profile.<% end %><br>
+  </div>
+  <div class="field">
+  	<label for="profile_name">Event Type</label>
+	<select class="form-control" name="event[fireteam_group_type]">
+		<option value="Raid - Vault of Glass">Raid - Vault of Glass</option>
+		<option value="Strike Team - Weekly">Strike Team - Weekly</option>
+		<option value="Strike Weekly Nightfall">Strike Weekly Nightfall</option>
+		<option value="Daily Heroic Story">Daily Heroic Story</option>
+		<option value="Strike Team - Devil's Lair">Strike Team - Devil's Lair</option>
+		<option value="Strike Team - The Summoning Pits">Strike Team - The Summoning Pits</option>
+		<option value="Strike Team - The Nexus">Strike Team - The Nexus</option>
+		<option value="Strike Team - Winter's Run">Strike Team - Winter's Run</option>
+		<option value="Strike Team - Cerberus Vae III">Strike Team - Cerberus Vae III</option>
+		<option value="Strike Team - Dust Palace">Strike Team - Dust Palace</option>
+		<option value="PvP - Control">PvP - Control</option>
+		<option value="PvP - Clash">PvP - Clash</option>
+		<option value="PvP - Rumble">PvP - Rumble</option>
+		<option value="PvP - Skirmish">PvP - Skirmish</option>
+		<option value="PvP - Salvage">PvP - Salvage</option>
+		<option value="PvP - Iron Banner">PvP - Iron Banner</option>
+	</select>
+  </div>
+  <div class="field">
+    <%= f.label :minimun_level %><br>
+    <%= f.number_field :level, class: 'form-control'   %>
+  </div>
+  <div class="field">
+    <%= f.label :comments %><br>
+    <%= f.text_area :comments, class: 'form-control'   %>
+  </div>
+<!--
+  <div class="field">
+    <%= f.label :video_sample_url %><br>
+    <%= f.text_field :video_url, class: 'form-control'   %>
+  </div>
+-->
+  <div class="field">
+    <%= f.label :date_time %><br>
+    <%= f.datetime_select :date_time, class: 'form-control'   %>
+  </div>
+<br>
+
+<label for="profile_name">System</label>  
+<div class="field">
+    
+<select class="form-control" name="event[system]">
+  <option value="PS4">PS4</option>
+  <option value="Xbox One">Xbox One</option>
+  <option value="PS3">PS3</option>
+  <option value="Xbox 360">Xbox 360</option>
+</select>
+
+<br>    
+    
+    
+    
+    
+    
+    
+</div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

@@ -1,0 +1,10 @@
+<% @events.each do |event| %>
+	<%= event.fireteam_group_type %>
+	<%= link_to 'Show', event %>
+	<% if current_user != nil %>
+		<% if event.fireteam_leader == current_user.id %>
+			<%= link_to 'Edit', edit_event_path(event) %>
+			<%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<% end %>	
+	<% end %><br>
+<% end %> 

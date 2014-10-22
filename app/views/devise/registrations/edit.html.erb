@@ -1,0 +1,98 @@
+
+
+
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Profile
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+
+
+<form role="form" action="/update_gamertag" method="post">
+  <div class="form-group">
+    <label for="psn">PSN ID <%= current_user.psn %></label>
+    <input type="text" class="form-control" name="psn" <% if current_user.psn == nil %> placeholder="PSN gamertag" <% else %> placeholder="<%= current_user.psn %>" <% end %>>
+  </div>
+  <div class="form-group">
+    <label for="xbl">XBL ID</label>
+    <input type="text" class="form-control" name="xbl" <% if current_user.xbl == nil %> placeholder="XBL gamertag" <% else %> placeholder="<%= current_user.xbl %>" <% end %>>
+  </div>
+  <div class="form-group">
+    <label for="destiny">Bungie Profile</label>
+    <input type="text" class="form-control" name="destiny" <% if current_user.destiny == nil %> placeholder="example: http://www.bungie.net/en/Profile/254/4614230" <% else %> placeholder="<%= current_user.destiny %>" <% end %>>
+  </div>
+	<div class="form-group">
+		<label for="xbl">Guardian</label>
+		<select class="form-control" name="event[fireteam_group_type]">
+			<option value="Titan-Striker">Titan-Striker</option>
+			<option value="Titan-Defender">Titan-Defender</option>
+			<option value="Hunter-Bladedancer">Hunter-Bladedancer</option>
+			<option value="Hunter-Gunslinger">Hunter-Gunslinger</option>
+			<option value="Warlock-Voidwalker">Warlock-Voidwalker</option>
+			<option value="Warlock-Sunsinger">Warlock-Sunsinger</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="xbl">Guardian Level</label>
+		<input type="text" class="form-control" name="level" <% if current_user.guardian_level == nil %> placeholder="Guardian level" <% else %> placeholder="<%= current_user.guardian_level %>" <% end %>>
+	</div>  
+	
+  
+<br>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          Password / Cancel Account
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email, autofocus: true, class: 'form-control' %></div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control' %></div>
+
+  <div><%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %></div>
+
+  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %></div>
+  
+  <br>
+  <div><%= f.submit "Update", class: 'btn btn-default'%></div>
+<% end %>
+
+<h3>Cancel my account</h3>
+
+<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), class: 'btn btn-default', data: { confirm: "Are you sure?" }, method: :delete %></p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
