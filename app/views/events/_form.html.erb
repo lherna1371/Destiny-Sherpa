@@ -56,10 +56,23 @@
 -->
   <div class="field">
     <%= f.label :date_time %><br>
-    <p> This is the time you would like to have the event, it is submitted in UTC as this is a global game. view the UTC to your local time comparison widget to list the correct time. </p>
+    <strong>Time is submitted in UTC, use the UTC to local time converter to submit the correct time.</strong>
+    <font color="red">Example: 22:00 UTC converts to 17:00 CDT (5:00 pm)</font><br>
+    
     <%= f.datetime_select :date_time, class: 'form-control'   %>
   </div>
+  
+  <div class="field">
+  <script type="text/javascript" id="WolframAlphaScriptb96801c254a54a8ec4feb22a54f14b1d" src="http://www.wolframalpha.com/widget/widget.jsp?id=b96801c254a54a8ec4feb22a54f14b1d"></script>
+  </div>
 <br>
+
+<style>
+
+table#wolframAlphaWidget76104, div#wolframAlphaWidget76104 {	width: 90%;
+}
+
+</style>
 
 <label for="profile_name">System</label>  
 <div class="field">
