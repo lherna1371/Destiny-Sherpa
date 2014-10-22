@@ -10,9 +10,9 @@ class EventsController < ApplicationController
 	puts params.inspect
 	puts "####"  
 	if params[:event].present?
-		@events = Event.where(system: params[:event][:system], fireteam_group_type: params[:event][:fireteam_group_type], open: true).paginate(page: params[:page], per_page: 2)
+		@events = Event.where(system: params[:event][:system], fireteam_group_type: params[:event][:fireteam_group_type], open: true).paginate(page: params[:page], per_page: 10)
 	else 
-		@events = Event.where(open: true).paginate(page: params[:page], per_page: 5)
+		@events = Event.where(open: true).paginate(page: params[:page], per_page: 10)
 	end 
 	
     if current_user != nil 
