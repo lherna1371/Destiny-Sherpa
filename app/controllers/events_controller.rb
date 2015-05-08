@@ -3,12 +3,8 @@ class EventsController < ApplicationController
   skip_before_filter :verify_authenticity_token 
   
   
-  # GET /events
-  # GET /events.json
   def index
 
-	puts params.inspect
-	puts "####"  
 	if params[:event].present?
 		@events = Event.where(system: params[:event][:system], fireteam_group_type: params[:event][:fireteam_group_type], open: true).paginate(page: params[:page], per_page: 10)
 	else 
@@ -21,14 +17,10 @@ class EventsController < ApplicationController
 	    @my_events = []
 	    list.each do |event|    	
 	    	@my_events << Event.where(id: event)
-	    	puts @my_events.inspect
-	    	puts "#######"
 	    end 
 	end 
   end
 
-  # GET /events/1
-  # GET /events/1.json
   def show
   	event_requests = Event.where(id: params[:id])
   	@leader = User.where(id: event_requests.first.fireteam_leader)
@@ -50,8 +42,6 @@ class EventsController < ApplicationController
 	end 
 	
 	event_requests.first.approvals.each do |x|
-  		puts x.inspect 
-  		puts "@@@@@@"
   		@fireteam_array << User.where(id: x)
   	end 
   	
@@ -59,7 +49,6 @@ class EventsController < ApplicationController
   	@announcements = EventComment.where(event_id: event_requests.first.id)
   end
 
-  # GET /events/new
   def new
 
   	if current_user.psn == nil && current_user.xbl == nil 
@@ -69,18 +58,13 @@ class EventsController < ApplicationController
     end 
   end
 
-  # GET /events/1/edit
   def edit
-  	puts params.inspect
-  	puts "######"
   	event = Event.where(id: params[:id])
   	if event.first.fireteam_leader != current_user.id 
   		redirect_to root_url, notice: 'Not manager of this event, unable to edit.'
   	end 
   end
 
-  # POST /events
-  # POST /events.json
   def create
     @event = Event.new(event_params)
     
@@ -100,8 +84,7 @@ class EventsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /events/1
-  # PATCH/PUT /events/1.json
+
   def update
     respond_to do |format|
       if @event.update(event_params)
@@ -114,8 +97,7 @@ class EventsController < ApplicationController
     end
   end
 
-  # DELETE /events/1
-  # DELETE /events/1.json
+
   def destroy
     @event.destroy
     respond_to do |format|
@@ -202,12 +184,10 @@ class EventsController < ApplicationController
   end 
     
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_event
       @event = Event.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       params.require(:event).permit(:fireteam_leader, :fireteam_group_type, :level, :comments, :video_url, :date_time, :system)
     end

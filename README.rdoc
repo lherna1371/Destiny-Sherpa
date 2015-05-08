@@ -1,28 +1,4 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A simple fireteam creation app and manager tool for the Destiny video game. I am a big fan of the game and worked on this simple app as a fun learning experience. Users can register, create a Fireteam for a game event or join a Fireteam group. Users must request to join a group, if a user is a group 'owener' they must approve others to join. Once in a Fireteam group users can view other members of the group and post comments. 
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.

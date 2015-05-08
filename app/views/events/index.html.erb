@@ -88,19 +88,18 @@
 </ul>
 <div class="col-md-6 col-xs-6">
 <ul class="list-group">
-<strong><font color="red">Date/Time: <%= event.date_time.localtime  %></font></strong>
+<strong><font color="red">Date/Time: <%= local_time(event.date_time)  %></font></strong>
 <p><%= event.comments.truncate(75) %></p>	
 </ul>
 </div>
 
 </div>
-<%= will_paginate @events %>
+
 
 
 <% end %> 
 
-
-	  
+ <%= will_paginate @events %> 
 	  
 	  
 	  
@@ -131,7 +130,7 @@
 
 <div class="col-md-6 col-xs-6">
 <ul class="list-group">
-<p>Date/Time: <%= list.first.date_time.localtime  %></p>
+<p>Date/Time: <%= local_time(list.first.date_time)  %></p>
 <p><%= list.first.comments.truncate(75) %></p>	
 <p><% if list.first.approvals.include?(current_user.id) %> <font color="gold"> <h5>APPROVED</h5> </font><% else %><font color="gold"> Awaiting approval... </font><% end %></p>
 </ul>
